@@ -1,8 +1,8 @@
 import { ApplicationError } from "@/protocols";
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import httpStatus from "http-status";
 
-export function handleApplicationErrors(err: ApplicationError | Error, _req: Request, res: Response, next: NextFunction) {
+export function handleApplicationErrors(err: ApplicationError | Error, _req: Request, res: Response) {
   if (err.name === "CannotEnrollBeforeStartDateError") {
     return res.status(httpStatus.BAD_REQUEST).send({
       message: err.message,
@@ -39,6 +39,4 @@ export function handleApplicationErrors(err: ApplicationError | Error, _req: Req
     error: "InternalServerError",
     message: "Internal Server Error",
   });
-
-  next();
 }
